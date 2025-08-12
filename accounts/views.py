@@ -11,7 +11,10 @@ from .models import Profile
 
 
 def home_view(request):
-    return HttpResponse("Welcome, you're logged in!")
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    else:
+        return redirect('login')
 
 def register_view(request):
      if request.method == 'POST':
