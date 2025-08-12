@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<h2 class="text-2xl font-bold text-blue-600 mb-6">Register</h2>
+<form method="POST" class="space-y-6 max-w-md mx-auto">
+    {% csrf_token %}
+    {# To make form.as_p inputs styled, override widget classes in the form or manually render fields #}
+    {% for field in form %}
+        <div>
+            <label class="block font-medium mb-1" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+                <p class="text-xs text-gray-500">{{ field.help_text }}</p>
+            {% endif %}
+            {% for error in field.errors %}
+                <p class="text-red-600 text-sm">{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors duration-300">
+        Sign Up
+    </button>
+</form>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-lg mx-auto mt-10 p-6 bg-white rounded-lg shadow border border-blue-200">
+    <h2 class="text-2xl font-bold mb-4 text-blue-700">Profile</h2>
+    
+    <form method="POST" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+
+        <div>
+            <label class="block font-medium mb-1">Username</label>
+            <input type="text" name="username" value="{{ request.user.username }}"
+                class="w-full border border-blue-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+            <label class="block font-medium mb-1">Email</label>
+            <input type="email" name="email" value="{{ request.user.email }}"
+                class="w-full border border-blue-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+            <label class="block font-medium mb-1">Profile Picture</label>
+            {% if profile.profile_picture %}
+                <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="w-32 h-32 object-cover rounded mb-2">
+            {% else %}
+                <p class="text-gray-500 mb-2">No profile picture uploaded.</p>
+            {% endif %}
+            <input type="file" name="profile_picture" class="w-full">
+        </div>
+
+        <button type="submit"
+            class="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700 transition-colors duration-300">
+            Update Profile
+        </button>
+    </form>
+
+    <div class="mt-6 text-center">
+        <a href="{% url 'dashboard' %}" class="text-blue-600 hover:underline">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}
